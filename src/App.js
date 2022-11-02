@@ -1,8 +1,17 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./helpers/ScrollToTop";
+
+import HomePage from "./pages/HomePage";
+
 function App() {
   return (
-    <div className="App">
-      <p>Entertainment app</p>
-    </div>
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
   );
 }
 
