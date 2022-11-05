@@ -5,40 +5,40 @@ import movieIcon from "../assets/icon-category-movie.svg";
 import seriesIcon from "../assets/icon-category-tv.svg";
 import Bookmark from "./Bookmark";
 import playIcon from "../assets/icon-play.svg";
-
-const TrendingProduct = ({ movie }) => {
+const Movie = ({ movie }) => {
   const { title, thumbnail, year, category, rating, isBookmarked } = movie;
-  const [bgImg, setBgImg] = useState();
-  const [width, setWidth] = useState();
+  const [movieImg, setMovieImg] = useState();
 
   useEffect(() => {
     function handleWindowResize() {
       const { innerWidth } = window;
-      if (Number(innerWidth > 732)) {
-        setBgImg(thumbnail.trending.large.slice(1));
+      if (Number(innerWidth) > 1064) {
+        setMovieImg(thumbnail.regular.large.slice(1));
+      } else if (Number(innerWidth > 732)) {
+        setMovieImg(thumbnail.regular.medium.slice(1));
       } else {
-        setBgImg(thumbnail.trending.small.slice(1));
+        setMovieImg(thumbnail.regular.small.slice(1));
       }
-      setWidth(Number(innerWidth));
     }
     handleWindowResize();
 
     window.addEventListener("resize", handleWindowResize);
   }, []);
+
   return (
-    <Wrapper bgImg={process.env.PUBLIC_URL + bgImg} alt={title}>
+    <Wrapper>
       <Bookmark active={isBookmarked} title={title} />
-      <Layer>
-        <PlayContainer>
-          <img src={playIcon} alt="" style={{ marginLeft: 9 }} />
-          <span>Play</span>
-        </PlayContainer>
-      </Layer>
-      {width <= 732 && (
-        <MobileRating>
-          <InfoText style={{ padding: "2px 8px" }}>{rating}</InfoText>
-        </MobileRating>
-      )}
+      <Image
+        style={{ backgroundImage: `url(${process.env.PUBLIC_URL + movieImg})` }}
+        alt={title}
+      >
+        <Layer>
+          <PlayContainer>
+            <img src={playIcon} alt="" style={{ marginLeft: 9 }} />
+            <span>Play</span>
+          </PlayContainer>
+        </Layer>
+      </Image>
       <Container>
         <InfoContainer>
           <InfoText>{year}</InfoText>
@@ -47,18 +47,28 @@ const TrendingProduct = ({ movie }) => {
             <CategoryLogo src={category === "Movie" ? movieIcon : seriesIcon} />
             <InfoText>{category}</InfoText>
           </MovieContainer>
-          {width > 732 && (
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Dot style={{ marginRight: 8 }} />
-              <InfoText>{rating}</InfoText>
-            </div>
-          )}
+          <Dot />
+          <InfoText>{rating}</InfoText>
         </InfoContainer>
         <Title>{title}</Title>
       </Container>
     </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  position: relative;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  @media (max-width: 1064px) {
+    width: 220px;
+  }
+  @media (max-width: 732px) {
+    width: 164px;
+  }
+`;
 
 const Layer = styled.div`
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
@@ -72,17 +82,21 @@ const Layer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
+const Image = styled.div`
+  width: 280px;
+  height: 174px;
   border-radius: 8px;
-  background: url(${(props) => props.bgImg});
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  align-items: flex-end;
   overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  @media (max-width: 1064px) {
+    width: 220px;
+    height: 140px;
+  }
+  @media (max-width: 732px) {
+    width: 164px;
+    height: 110px;
+  }
   &:hover {
     ${Layer} {
       display: flex;
@@ -91,20 +105,11 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  padding: 24px;
   width: 100%;
   display: flex;
   flex-direction: column;
-
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.0001) 0%,
-    rgba(0, 0, 0, 0.75) 100%
-  );
-  @media (max-width: 732px) {
-    padding: 16px;
-  }
 `;
+
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -125,9 +130,13 @@ const InfoText = styled.span`
   font-size: 15px;
   opacity: 0.75;
   white-space: nowrap;
+  @media (max-width: 1064px) {
+    font-size: 13px;
+    line-height: 16.38px;
+  }
   @media (max-width: 732px) {
-    font-size: 12px;
-    line-height: 15.12px;
+    font-size: 11px;
+    line-height: 13.86px;
   }
 `;
 
@@ -141,6 +150,10 @@ const MovieContainer = styled.div`
 const CategoryLogo = styled.img`
   width: 12px;
   height: 12px;
+  @media (max-width: 732px) {
+    width: 10px;
+    height: 10px;
+  }
 `;
 
 const Title = styled.h3`
@@ -148,18 +161,14 @@ const Title = styled.h3`
   font-weight: 500;
   line-height: 30.24px;
   margin-top: 3px;
-  @media (max-width: 732px) {
-    font-size: 15px;
-    line-height: 18.9px;
+  @media (max-width: 1064px) {
+    font-size: 18px;
+    line-height: 22.68px;
   }
-`;
-
-const MobileRating = styled.div`
-  background-color: rgba(16, 20, 30, 0.5);
-  border-radius: 999px;
-  position: absolute;
-  right: 16px;
-  bottom: 24px;
+  @media (max-width: 732px) {
+    font-size: 14px;
+    line-height: 22.68px;
+  }
 `;
 
 export const PlayContainer = styled.div`
@@ -175,4 +184,4 @@ export const PlayContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.25);
 `;
 
-export default TrendingProduct;
+export default Movie;

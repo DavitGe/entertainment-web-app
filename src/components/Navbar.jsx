@@ -5,13 +5,15 @@ import styled from "styled-components";
 import avatar from "../assets/image-avatar.png";
 
 const Navbar = () => {
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = useState(1);
+  const [width, setWidth] = useState(1);
   const location = useLocation();
 
   useEffect(() => {
     function handleWindowResize() {
-      const { innerHeight } = window;
+      const { innerHeight, innerWidth } = window;
       setHeight(Number(innerHeight));
+      setWidth(Number(innerWidth));
     }
     handleWindowResize();
 
@@ -20,8 +22,8 @@ const Navbar = () => {
 
   return (
     <Container height={height - 64}>
-      <NavLinksList>
-        <LogoContainer to="/">
+      {width <= 1064 && (
+        <LogoContainer to="/" style={{ marginLeft: 16 }}>
           <svg width="33" height="27" xmlns="http://www.w3.org/2000/svg">
             <path
               d="m26.463.408 3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-1.6a3.186 3.186 0 0 0-3.184 3.2l-.016 19.2a3.2 3.2 0 0 0 3.2 3.2h25.6a3.2 3.2 0 0 0 3.2-3.2V.408h-6.4Z"
@@ -29,6 +31,19 @@ const Navbar = () => {
             />
           </svg>
         </LogoContainer>
+      )}
+
+      <NavLinksList>
+        {width > 1064 && (
+          <LogoContainer to="/">
+            <svg width="33" height="27" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m26.463.408 3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-1.6a3.186 3.186 0 0 0-3.184 3.2l-.016 19.2a3.2 3.2 0 0 0 3.2 3.2h25.6a3.2 3.2 0 0 0 3.2-3.2V.408h-6.4Z"
+                fill="#FC4747"
+              />
+            </svg>
+          </LogoContainer>
+        )}
         <NavLinkContainer to="/">
           <NavLinkSvg
             active={location.pathname === "/"}
@@ -88,6 +103,20 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 1064px) {
+    flex-direction: row;
+    height: 72px;
+    width: 100%;
+    margin-top: 0;
+    position: relative;
+  }
+  @media (max-width: 732px) {
+    position: relative;
+    width: 100vw;
+    border-radius: 0;
+    margin-left: -16px;
+    margin-top: -16px;
+  }
 `;
 
 const LogoContainer = styled(Link)`
@@ -96,6 +125,10 @@ const LogoContainer = styled(Link)`
   margin-top: 36px;
   margin-bottom: 35px;
   cursor: pointer;
+  @media (max-width: 732px) {
+    width: 25px;
+    height: 20px;
+  }
 `;
 
 const NavLinksList = styled.div`
@@ -103,11 +136,21 @@ const NavLinksList = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 40px;
+  @media (max-width: 1064px) {
+    flex-direction: row;
+  }
+  @media (max-width: 732px) {
+    gap: 24px;
+  }
 `;
 
 const NavLinkContainer = styled(Link)`
   width: 20px;
   height: 20px;
+  @media (max-width: 732px) {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const NavLinkSvg = styled.svg`
@@ -127,6 +170,14 @@ const ProfilePicContainer = styled.div`
   border: 1px solid #fff;
   margin-bottom: 32px;
   cursor: pointer;
+  @media (max-width: 1064px) {
+    margin-bottom: 0;
+    margin-right: 16px;
+  }
+  @media (max-width: 732px) {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const ProfilePic = styled.img`

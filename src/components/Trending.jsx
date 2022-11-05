@@ -29,12 +29,8 @@ const Trending = () => {
         >
           {trendingMovies.map((movie) => {
             return (
-              <ProductContainer>
-                <TrendingProduct
-                  movie={movie}
-                  key={movie.title}
-                  className="card"
-                />
+              <ProductContainer key={movie.title}>
+                <TrendingProduct movie={movie} className="card" />
               </ProductContainer>
             );
           })}
@@ -46,10 +42,12 @@ const Trending = () => {
 
 const Container = styled.div`
   width: 100%;
-  height: 300px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 732px) {
+    margin-top: 8px;
+  }
 `;
 
 const Title = styled.h2``;
@@ -60,6 +58,9 @@ const Carousel = styled(motion.div)`
   position: relative;
   height: 230px;
   margin-top: 25px;
+  @media (max-width: 732px) {
+    height: 140px;
+  }
 `;
 const InnerCarousel = styled(motion.div)`
   display: flex;
@@ -70,6 +71,11 @@ const ProductContainer = styled(motion.div)`
   width: 470px;
   height: 100%;
   margin-right: 40px;
+  @media (max-width: 732px) {
+    min-width: 240px;
+    width: 240px;
+    margin-right: 16px;
+  }
 `;
 
 export default Trending;

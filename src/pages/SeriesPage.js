@@ -4,16 +4,18 @@ import MovieList from "../components/MovieList";
 
 import { PageWrapper } from "../components/PageWrapper";
 import Search from "../components/Search";
-import Trending from "../components/Trending";
-const HomePage = () => {
+
+const SeriesPage = () => {
   const movies = useSelector((state) => state);
   return (
     <PageWrapper>
-      <Search placeholder={"Search for movies or TV series"} category="all" />
-      <Trending />
-      <MovieList movies={movies} title="Recommended for you" />
+      <Search placeholder={"Search for TV series"} category="tv-series" />
+      <MovieList
+        movies={movies.filter((movie) => movie.category === "TV Series")}
+        title="TV Series"
+      />
     </PageWrapper>
   );
 };
 
-export default HomePage;
+export default SeriesPage;

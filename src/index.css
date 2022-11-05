@@ -29,3 +29,11 @@ h2 {
   letter-spacing: -0.5;
   font-weight: 300;
 }
+
+@media (max-width: 1064px) {
+  h2 {
+    font-size: 20px;
+    line-height: 25.2px;
+    letter-spacing: -0.32px;
+  }
+}

@@ -32,7 +32,7 @@ const Bookmark = ({ active, title }) => {
         >
           <path
             d="m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             fill="none"
           />
         </Icon>
@@ -60,6 +60,7 @@ const Button = styled.button`
   cursor: pointer;
   border: none;
   transition: 0.2s;
+  z-index: 10;
   &:hover {
     background-color: #fff;
     ${Icon} {
@@ -69,6 +70,10 @@ const Button = styled.button`
       stroke-width: 1.5px;
     }
     transition: 0.2s;
+  }
+  @media (max-width: 732px) {
+    top: 8px;
+    right: 8px;
   }
 `;
 

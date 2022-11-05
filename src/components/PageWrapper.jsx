@@ -5,4 +5,7 @@ export const PageWrapper = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
+  @media (max-width: 1064px) {
+    margin-left: 0;
+  }
 `;
