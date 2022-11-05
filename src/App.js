@@ -13,7 +13,7 @@ import SeriesPage from "./pages/SeriesPage";
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Wrapper>
         <ScrollToTop />
         <Navbar />
